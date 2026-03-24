@@ -20,6 +20,8 @@ Module 2 of 8 · Branching & Merging Strategies
   - [Task 3: Merge Back to Main](#task-3-merge-back-to-main)
   - [Task 4: Simulate & Resolve Merge Conflict](#task-4-simulate--resolve-merge-conflict)
   - [Task 5: Visualise Branch History](#task-5-visualise-branch-history)
+- [Hands-On Lab Setup](#hands-on-lab-setup)
+- [Lab Task Checklist](#lab-task-checklist)
 - [Quick Reference](#quick-reference)
 - [Bonus Commands](#bonus-commands)
 
@@ -283,6 +285,95 @@ git commit
 git log --oneline --graph --all --decorate
 # Identify merge commit (asterisk with two parent lines diverging)
 
+git log --oneline
+git log --stat
+git show HEAD
+```
+
+**Deliverables:** Multi-branch repo · Merge conflict resolved · `git log --graph` screenshot · Branch strategy notes
+
+---
+
+## Hands-On Lab Setup
+
+Navigate to your Day 1 repository (same paths as [Prerequisites](#prerequisites)):
+
+**macOS / Linux / Git Bash:**
+```bash
+cd ~/Projects/trainings/git-18094/day1-lab
+```
+
+**Windows (PowerShell):**
+```powershell
+cd $env:USERPROFILE\Projects\trainings\git-18094\day1-lab
+```
+
+**Windows (CMD):**
+```cmd
+cd %USERPROFILE%\Projects\trainings\git-18094\day1-lab
+```
+
+---
+
+## Lab Task Checklist
+
+Condensed commands for the full lab. For explanations, Python snippets, and Windows conflict alternatives, see the [Lab Guide](#lab-guide) above.
+
+### Task 1: Create Feature Branches
+```bash
+cd ~/Projects/trainings/git-18094/day1-lab
+git checkout -b feature/add-division
+git branch
+git checkout -b feature/add-modulo
+git checkout feature/add-division
+git branch
+```
+
+### Task 2: Commit on Feature Branch
+Add `divide(a, b)` to `calculator.py` (see Lab Guide), then:
+```bash
+git add calculator.py
+git commit -m "feat: add divide function"
+mkdir -p tests
+# Add tests/test_calc.py — see Lab Guide
+git add tests/
+git commit -m "test: add divide test"
+git log --oneline
+```
+
+### Task 3: Merge Back to Main
+```bash
+git checkout main
+git log --oneline
+git merge feature/add-division
+git log --oneline --graph --all
+git branch -d feature/add-division
+```
+
+### Task 4: Simulate & Resolve Merge Conflict
+```bash
+git checkout main
+{ echo '# Calculator v2.0'; cat calculator.py; } > calculator.py.tmp && mv calculator.py.tmp calculator.py
+git add calculator.py
+git commit -m "docs: version header on main"
+
+git checkout feature/add-modulo
+{ echo '# Calculator utilities'; cat calculator.py; } > calculator.py.tmp && mv calculator.py.tmp calculator.py
+git add calculator.py
+git commit -m "docs: version header on feature"
+
+git checkout main
+git merge feature/add-modulo
+git status
+# Resolve conflict markers in calculator.py, then:
+git add calculator.py
+git commit
+```
+**Windows:** Use the PowerShell prepend from Task 4 in the Lab Guide instead of `{ echo ...; cat ... }`.
+
+### Task 5: Visualise Branch History
+```bash
+git log --oneline --graph --all --decorate
 git log --oneline
 git log --stat
 git show HEAD

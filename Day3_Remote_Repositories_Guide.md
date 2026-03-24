@@ -20,6 +20,8 @@ Module 3 of 8 · Remote Repositories & GitHub/GitLab Basics
   - [Task 3: Push Local Repo to Remote](#task-3-push-local-repo-to-remote)
   - [Task 4: Clone an Existing Repo](#task-4-clone-an-existing-repo)
   - [Task 5: Write README & Push Documentation](#task-5-write-readme--push-documentation)
+- [Hands-On Lab Setup](#hands-on-lab-setup)
+- [Lab Task Checklist](#lab-task-checklist)
 - [Quick Reference](#quick-reference)
 - [Bonus Commands](#bonus-commands)
 
@@ -250,6 +252,77 @@ git commit -m "docs: add comprehensive README"
 git push
 
 # Open GitHub/GitLab in browser — README renders on repo homepage
+```
+
+**Deliverables:** SSH configured · Remote repo with pushed commits · README rendered on web
+
+---
+
+## Hands-On Lab Setup
+
+**macOS / Linux / Git Bash:**
+```bash
+cd ~/Projects/trainings/git-18094/day1-lab
+```
+
+**Windows (PowerShell):**
+```powershell
+cd $env:USERPROFILE\Projects\trainings\git-18094\day1-lab
+```
+
+**Windows (CMD):**
+```cmd
+cd %USERPROFILE%\Projects\trainings\git-18094\day1-lab
+```
+
+---
+
+## Lab Task Checklist
+
+Condensed commands for the full lab. For UI steps and README template, see the [Lab Guide](#lab-guide).
+
+### Task 1: Set Up SSH Authentication
+```bash
+ssh-keygen -t ed25519 -C "jaisingh1006@gmail.com"
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+cat ~/.ssh/id_ed25519.pub
+# Add key in GitHub/GitLab UI, then:
+ssh -T git@github.com
+```
+
+### Task 2: Create Remote Repository
+Create an empty repo on GitHub/GitLab (no README init) — copy the **SSH clone URL**.
+
+### Task 3: Push Local Repo to Remote
+Replace the remote URL with yours:
+```bash
+cd ~/Projects/trainings/git-18094/day1-lab
+git remote add origin git@github.com:jjnavsofs0/my-first-project.git
+git branch -M main
+git push -u origin main
+git remote -v
+```
+
+### Task 4: Clone an Existing Repo
+```bash
+git clone git@github.com:jjnavsofs0/my-first-project.git cloned-repo
+cd cloned-repo
+git log --oneline
+git remote -v
+echo 'Cloned edit' >> README.md
+git add .
+git commit -m "docs: update from cloned repo"
+git push
+```
+
+### Task 5: Write README & Push Documentation
+```bash
+cd ~/Projects/trainings/git-18094/day1-lab
+# Edit README.md — see Lab Guide for structure
+git add README.md
+git commit -m "docs: add comprehensive README"
+git push
 ```
 
 **Deliverables:** SSH configured · Remote repo with pushed commits · README rendered on web
